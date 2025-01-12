@@ -40,6 +40,7 @@ std::ostream& operator<<(std::ostream& os, std::vector<int>& sequence)
 
 void populate_sequence(std::vector<int> &sequence, int n)
 {
+  sequence.reserve(n - 1);
   size_t index_to_remove = generate_random_int(0, n - 1);
 
   for(size_t i = 0; i < n; i++)
@@ -51,12 +52,10 @@ void populate_sequence(std::vector<int> &sequence, int n)
 
 int find_missing(std::vector<int> &sequence)
 {
-  for(size_t i = 1; i <= sequence.size() + 1; i++)
-  {
-    auto it = std::find(sequence.begin(), sequence.end(), i);
-    if(it == sequence.end()) return i;
-  }
-  return -1;
+  int n = sequence.size() + 1;
+  int total_sum = n * (n + 1) / 2;
+  int acc_sum = std::accumulate(sequence.begin(), sequence.end(), 0);
+  return total_sum - acc_sum;
 }
 
 int main()
