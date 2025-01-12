@@ -1,13 +1,15 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
+#include <random>
+#include <ctime>
 
 // Code to solve: https://cses.fi/problemset/task/1083/
 
 void init_random_generator()
 {
   // Seed random generator with current time
-  srand(time(0));
+  srand(static_cast<unsigned>(time(0)));
 }
 
 int generate_random_int(unsigned int lower_lim, unsigned int upper_lim)
@@ -20,6 +22,12 @@ int generate_random_int(unsigned int lower_lim, unsigned int upper_lim)
 
 std::ostream& operator<<(std::ostream& os, std::vector<int>& sequence)
 {
+  if (sequence.empty())
+  {
+    os << "[]";
+    return os;
+  }
+
   os << "[";
   os << *sequence.begin();
   for(auto it = next(sequence.begin()); it != sequence.end(); it++)
