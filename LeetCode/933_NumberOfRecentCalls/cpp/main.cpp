@@ -25,13 +25,15 @@ int RecentCounter::ping(int t)
   // t : time in [ms]
   // Returns the number of requets from the past 3000 [ms] (including the new one)
   // Specifically, returns the number of requests that have happened in [t - 3000, t]
+
+  // Add the new request time to the front of the deque
   requests.push_front(t);
-  int t_tmp = requests.back();
-  while (!(t - 3000 <= t_tmp && t_tmp <= t))
+  // Remove requests that are older than 3000 ms from the current time
+  while (!requests.empty() && requests.back() < t - 3000)
   {
     requests.pop_back();
-    t_tmp = requests.back();
   }
+  // Return the number of requests in the last 3000 ms
   return requests.size();
 }
 
