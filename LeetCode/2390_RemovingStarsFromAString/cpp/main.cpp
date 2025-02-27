@@ -5,24 +5,17 @@
 std::string remove_stars(std::string s)
 {
   std::string r;
-  std::stack<char> c;
 
   for(int i = 0; i < s.size(); i++)
   {
     if(s[i] == '*')
     {
-      c.pop();
+      if(!r.empty()) r.pop_back();
     }
     else
     {
-      c.push(s[i]);
+      r.push_back(s[i]);
     }
-  }
-
-  while(!c.empty())
-  {
-    r = c.top() + r;
-    c.pop();
   }
 
   return r;
