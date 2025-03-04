@@ -11,24 +11,26 @@ class Node
   Node(int value) : value{value}, left{nullptr}, right{nullptr} {};
 };
 
-int max_depth(Node* root)
+int max_depth_bfs(Node* root)
 {
-  if (!root) return -1;
-  int depth = 1;
+  if (!root) return 0;
   std::deque<Node*> nodes;
-  Node* tmp = root;
-  nodes.push_back(tmp);
-  while(nodes.size() > 0)
+  nodes.push_back(root);
+  int depth = 0;
+
+  while (!nodes.empty())
   {
-    tmp = nodes.front();
-    nodes.pop_front();
-    if(tmp->left || tmp->right)
+    int level_size = nodes.size();
+    for (int i = 0; i < level_size; ++i)
     {
-      depth++;
-      if(tmp->left) nodes.push_back(tmp->left);
-      if(tmp->right) nodes.push_back(tmp->right);
+      Node* tmp = nodes.front();
+      nodes.pop_front();
+      if (tmp->left) nodes.push_back(tmp->left);
+      if (tmp->right) nodes.push_back(tmp->right);
     }
+    depth++;
   }
+
   return depth;
 }
 
@@ -39,6 +41,6 @@ int main()
   root->right = new Node{20};
   root->right->left = new Node{15};
   root->right->right = new Node{7};
-  std::cout << "Depth: " << max_depth(root) << std::endl;
+  std::cout << "Depth: " << max_depth_bfs(root) << std::endl;
   return 0;
 }
