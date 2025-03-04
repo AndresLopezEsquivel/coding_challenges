@@ -34,6 +34,14 @@ int max_depth_bfs(Node* root)
   return depth;
 }
 
+int max_depth_dfs(Node* root)
+{
+  if (!root) return 0;
+  int left_depth = max_depth_dfs(root->left);
+  int right_depth = max_depth_dfs(root->right);
+  return std::max(left_depth, right_depth) + 1;
+}
+
 int main()
 {
   Node* root = new Node{3};
@@ -41,6 +49,7 @@ int main()
   root->right = new Node{20};
   root->right->left = new Node{15};
   root->right->right = new Node{7};
-  std::cout << "Depth: " << max_depth_bfs(root) << std::endl;
+  std::cout << "Depth (BFS): " << max_depth_bfs(root) << std::endl;
+  std::cout << "Depth (DFS): " << max_depth_dfs(root) << std::endl;
   return 0;
 }
