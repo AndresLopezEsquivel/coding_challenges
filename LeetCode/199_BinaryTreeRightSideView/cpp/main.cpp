@@ -4,6 +4,12 @@
 
 std::ostream& operator<<(std::ostream& os, const std::vector<int>& v)
 {
+  if(v.empty())
+  {
+    os << "[]";
+    return os;
+  }
+
   os << "[";
   for(auto it = v.begin(); it != std::prev(v.end()); it++)
     os << *it << ", ";
@@ -19,11 +25,18 @@ class Node
   int value;
   Node() : value{0}, right{nullptr}, left{nullptr} {}
   Node(int value) : value{value}, right{nullptr}, left{nullptr} {}
+  ~Node()
+  {
+    std::cout << "Deleting: " << value << std::endl;
+    delete left;
+    delete right;
+  }
 };
 
 std::vector<int> right_side_view(Node* root)
 {
   std::vector<int> values;
+  if(!root) return values;
   std::deque<Node*> nodes;
   nodes.push_back(root);
   while(!nodes.empty())
@@ -57,6 +70,11 @@ int main()
 
   std::cout << "root_1 : " << right_side_view(root_1) << std::endl;
   std::cout << "root_2 : " << right_side_view(root_2) << std::endl;
+  std::cout << "root_3 (nullptr) : " << right_side_view(nullptr) << std::endl;
+  std::cout << std::endl;
+  delete root_1;
+  std::cout << std::endl;
+  delete root_2;
 
   return 0;
 }
