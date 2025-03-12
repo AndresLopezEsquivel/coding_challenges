@@ -2,7 +2,19 @@
 #include <iostream>
 #include <vector>
 
-void traverse_grid(int root_row, int root_col, std::vector<std::vector<int>>& grid)
+void dfs_traverse_grid(int root_row, int root_col, std::vector<std::vector<int>>& grid)
+{
+  if(root_row < 0 || root_row >= grid.size()) return;
+  if(root_col < 0 || root_col >= grid.front().size()) return;
+  if(grid[root_row][root_col] == 0) return;
+  grid[root_row][root_col] = 0;
+  dfs_traverse_grid(root_row - 1, root_col, grid);
+  dfs_traverse_grid(root_row + 1, root_col, grid);
+  dfs_traverse_grid(root_row, root_col - 1, grid);
+  dfs_traverse_grid(root_row, root_col + 1, grid);
+}
+
+void bfs_traverse_grid(int root_row, int root_col, std::vector<std::vector<int>>& grid)
 {
   int grid_rows = grid.size();
   int grid_cols = grid.front().size();
@@ -40,7 +52,9 @@ int num_islands(std::vector<std::vector<int>>& grid)
     for(int j = 0; j < grid.front().size(); j++)
     {
       if(grid[i][j] == 0) continue;
-      traverse_grid(i,j,grid);
+      // bfs_traverse_grid(i,j,grid);
+      dfs_traverse_grid(i,j,grid);
+
       islands++;
     }
   }
