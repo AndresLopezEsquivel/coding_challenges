@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-void traverse_grid(int root_row, int root_col, std::vector<std::vector<char>>& grid)
+void traverse_grid(int root_row, int root_col, std::vector<std::vector<int>>& grid)
 {
   int grid_rows = grid.size();
   int grid_cols = grid.front().size();
@@ -24,7 +24,7 @@ void traverse_grid(int root_row, int root_col, std::vector<std::vector<char>>& g
       // adj_cell.first => row
       // adj_cell.second => column
       if(adj_cell.first < 0 || adj_cell.first >= grid_rows) continue;
-      if(adj_cell.second < 0 || adj_cell.first >= grid_cols) continue;
+      if(adj_cell.second < 0 || adj_cell.second >= grid_cols) continue;
       if(grid[adj_cell.first][adj_cell.second] == 0) continue;
       grid[adj_cell.first][adj_cell.second] = 0;
       cells.push_back(std::make_pair(adj_cell.first, adj_cell.second));
@@ -32,7 +32,7 @@ void traverse_grid(int root_row, int root_col, std::vector<std::vector<char>>& g
   }
 }
 
-int num_islands(std::vector<std::vector<char>>& grid)
+int num_islands(std::vector<std::vector<int>>& grid)
 {
   int islands {0};
   for(int i = 0; i < grid.size(); i++)
@@ -47,8 +47,8 @@ int num_islands(std::vector<std::vector<char>>& grid)
   return islands;
 }
 
-void run_test(const std::vector<std::vector<char>>& grid, int expected, const std::string& test_name) {
-  std::vector<std::vector<char>> grid_copy = grid;
+void run_test(const std::vector<std::vector<int>>& grid, int expected, const std::string& test_name) {
+  std::vector<std::vector<int>> grid_copy = grid;
   int result = num_islands(grid_copy);
   if (result == expected) {
     std::cout << test_name << " passed." << std::endl;
@@ -58,7 +58,7 @@ void run_test(const std::vector<std::vector<char>>& grid, int expected, const st
 }
 
 int main() {
-  std::vector<std::vector<char>> island_1 {
+  std::vector<std::vector<int>> island_1 {
     {1, 1, 0, 1, 1},
     {1, 1, 0, 1, 1},
     {0, 0, 1, 0, 0},
@@ -66,7 +66,7 @@ int main() {
   };
   run_test(island_1, 4, "Test Case 1");
 
-  std::vector<std::vector<char>> island_2 {
+  std::vector<std::vector<int>> island_2 {
     {1, 1, 1, 1, 0},
     {1, 1, 0, 1, 0},
     {1, 1, 0, 0, 0},
@@ -74,7 +74,7 @@ int main() {
   };
   run_test(island_2, 1, "Test Case 2");
 
-  std::vector<std::vector<char>> island_3 {
+  std::vector<std::vector<int>> island_3 {
     {1, 0, 0, 0, 1},
     {0, 0, 0, 0, 0},
     {0, 0, 1, 0, 0},
@@ -82,7 +82,7 @@ int main() {
   };
   run_test(island_3, 5, "Test Case 3");
 
-  std::vector<std::vector<char>> island_4 {
+  std::vector<std::vector<int>> island_4 {
     {1, 1, 0, 0, 0},
     {1, 1, 0, 0, 0},
     {0, 0, 1, 0, 0},
@@ -90,7 +90,7 @@ int main() {
   };
   run_test(island_4, 3, "Test Case 4");
 
-  std::vector<std::vector<char>> island_5 {
+  std::vector<std::vector<int>> island_5 {
     {0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0},
