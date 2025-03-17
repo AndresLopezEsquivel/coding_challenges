@@ -38,20 +38,23 @@ std::pair<int,int> get_indexes_of(
   return std::make_pair(r,c);
 }
 
-void snakes_and_ladders(std::vector<std::vector<int>>& board)
+int snakes_and_ladders(std::vector<std::vector<int>>& board)
 {
   int board_h = board.size();
   int board_w = board.front().size();
   std::vector<bool> visited ((board_h * board_w) + 1, false);
+  std::vector<int> dist ((board_h * board_w) + 1, -1);
   std::deque<int> q;
   q.push_back(1);
   visited[1] = true;
+  dist[1] = 0;
   while(!q.empty())
   {
     int curr_pos = q.front();
     q.pop_front();
-    std::cout << curr_pos << std::endl;
-    std::cout << "[ ";
+    // std::cout << curr_pos << std::endl;
+    if(curr_pos == board_h * board_w) return dist[board_h * board_w];
+    // std::cout << "[ ";
     for(size_t i = 1; i < 7; i++)
     {
       int next_pos = curr_pos + i;
@@ -63,11 +66,13 @@ void snakes_and_ladders(std::vector<std::vector<int>>& board)
       {
         visited[next_pos] = true;
         q.push_back(next_pos);
+        dist[next_pos] = dist[curr_pos] + 1;
       }
-      std::cout << next_pos << " ";
+      // std::cout << next_pos << " ";
     }
-    std::cout << "]" << std::endl;
+    // std::cout << "]" << std::endl;
   }
+  return -1;
 }
 
 int main()
@@ -89,13 +94,15 @@ int main()
     {-1,15,-1,-1,-1,-1}
   };
 
-  // std::cout << get_indexes_of(1,board_1) << std::endl;
-  // std::cout << get_indexes_of(2,board_1) << std::endl;
-  // std::cout << get_indexes_of(3,board_1) << std::endl;
-  // std::cout << get_indexes_of(4,board_1) << std::endl;
-  // std::cout << get_indexes_of(5,board_1) << std::endl;
-  // std::cout << get_indexes_of(6,board_1) << std::endl;
-  snakes_and_ladders(board_2);
+  std::vector<std::vector<int>> board_3
+  {
+    {-1,-1},
+    {-1,3}
+  };
+
+  std::cout << "board_1 : " << snakes_and_ladders(board_1) << std::endl;
+  std::cout << "board_2 : " << snakes_and_ladders(board_2) << std::endl;
+  std::cout << "board_3 : " << snakes_and_ladders(board_3) << std::endl;
 
   return 0;
 }
