@@ -1,5 +1,24 @@
 #include <iostream>
+#include <stack>
 #include <unordered_map>
+
+int g(int n)
+{
+  int ways = 0;
+  std::stack<int> s;
+  s.push(0);
+  while(!s.empty())
+  {
+    int num = s.top();
+    s.pop();
+    for(int i = 1; i < 3; i++)
+    {
+      if(num + i == n) ways++;
+      if(num + i < n) s.push(num + i);
+    }
+  }
+  return ways;
+}
 
 int f(int n, std::unordered_map<int,int>& s)
 {
@@ -14,13 +33,15 @@ int f(int n, std::unordered_map<int,int>& s)
 
 int climb_stairs(int n)
 {
-  std::unordered_map<int,int> solutions;
-  return f(n, solutions);
+  // std::unordered_map<int,int> solutions;
+  // return f(n, solutions);
+  return g(n);
 }
 
 int main()
 {
   std::cout << "n = 2 : " << climb_stairs(2) << std::endl;
   std::cout << "n = 3 : " << climb_stairs(3) << std::endl;
+  std::cout << "n = 4 : " << climb_stairs(4) << std::endl;
   return 0;
 }
