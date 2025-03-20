@@ -2,6 +2,19 @@
 #include <stack>
 #include <unordered_map>
 
+int h(int n)
+{
+  int a = 1;
+  int b = 2;
+  for(int i = 3; i <= n; i++)
+  {
+    int k = a + b;
+    a = b;
+    b = k;
+  }
+  return b;
+}
+
 int g(int n)
 {
   int ways = 0;
@@ -35,7 +48,8 @@ int climb_stairs(int n)
 {
   // std::unordered_map<int,int> solutions;
   // return f(n, solutions);
-  return g(n);
+  // return g(n);
+  return h(n);
 }
 
 int main()
